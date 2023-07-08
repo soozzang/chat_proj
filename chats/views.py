@@ -11,6 +11,8 @@ from drf_yasg.utils import swagger_auto_schema
 
 
 
+def index(request):
+    return render(request,'index.html')
 #회원 
 class Signup(APIView):
     serializer_class = UserSerializer
