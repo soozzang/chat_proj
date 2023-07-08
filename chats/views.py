@@ -15,7 +15,6 @@ def index(request):
     return render(request,'index.html')
 #회원 
 class Signup(APIView):
-    serializer_class = UserSerializer
 
     @swagger_auto_schema(
         responses={200: UserSerializer()},
@@ -24,10 +23,11 @@ class Signup(APIView):
 
 
     def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response({"message": "Success Signup!", "user": serializer.data}, status=200)
+        user = User.objects.create_user(
+            userID = request.data["userID"],
+            password = request.data["password"]
+        )
+        return Response({"message": "Success Signup!"}, status = 200)
 
 
     
