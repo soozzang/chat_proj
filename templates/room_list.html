@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <h1>채팅방 리스트</h1>
+    {% if rooms %}
+    <div class="row equal">
+        <ui>
+        {% for room in rooms %}
+            <li>{{room.name}}
+            <a href="/room_chat/{{room.slug}}">입장하기</a></li><br>
+        {% endfor %}
+        </ui>
+    {% else %}
+        아직 생성된 방이 없습니다!
+    {% endif %}
+
+{% else %}
+    <h5>You are not logged in</h5>
+        <button type="button" class="btn btn-light"><a href="{% url 'chats:login' %}">Log In</button>
+{% endif %}
+{% endblock %}
