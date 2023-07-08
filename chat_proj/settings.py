@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-x@2(8%k#_++4ud=jdp_@kp$m00+euv1zf3qzi0epdzkb@zl^e*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'chats',
     'rest_framework',
+    'drf_yasg',
 ]
 
 CHANNEL_LAYERS = {
@@ -55,6 +56,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.TemplateHTMLRenderer',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -128,10 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'chats.Profile'
-
-LOGIN_REDIRECT_URL = '/' 
-LOGOUT_REDIRECT_URL = '/'
+AUTH_USER_MODEL = 'chats.User'
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -158,3 +157,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static' ]
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+

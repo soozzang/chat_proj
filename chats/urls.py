@@ -1,32 +1,50 @@
 from django.urls import path
 from .views import *
-from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth import views as auth_views
+from rest_framework import routers
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
+router = routers.DefaultRouter()
 
 app_name = 'chats'
 
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Your API",
+        default_version="v1",
+        description="Your API description",
+    ),
+    public=True,
+)
+
 urlpatterns = [
-    path('', index, name="index"),
+    path("room/<int:pk>/", RoomDetail.as_view(), name="room_detail_destroy"),
     
-    path('room_chat/<str:slug>/', room_chat, name='room_chat'),
+    path("room_list_create/", RoomList.as_view(), name="room_list_create"),
     
-    path('room_create/', room_create, name='room_create'),
-    
-    path('room_list/', room_list, name='room_list'),
+    path("room/<int:room_id>/chat_list/", ChatList.as_view(), name="chat_list"),
 
-    path('mypage/', mypage, name='mypage'),
+    #세부기능
 
-    path('search/', search, name='search'),
+    path('room/<int:room_id>/enter/',Users_in_room.as_view(), name='users_in_room'),
+
+    path('room/<int:room_id>/exit/',ExitRoom.as_view(), name = 'exit_room'),
+
+
 
     #회원관련
 
-    path('signup/', signup, name='signup'),
+    path('signup/', Signup.as_view()),
 
-    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+    path('login/', Login.as_view()),
 
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('logout/', Logout.as_view()),
 
+    path('myinfo/', MyInfo.as_view()),
+
+    #swagger
+    
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
 
 ]

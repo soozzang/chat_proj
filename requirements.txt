@@ -1,3 +1,6 @@
+Django==4.2.1
+djangorestframework==3.12.4
+drf_yasg==2.2.0
 asgiref==3.6.0
 attrs==23.1.0
 auth==0.5.3
@@ -46,3 +49,4 @@ typing_extensions==4.7.1
 urllib3==2.0.3
 Werkzeug==2.3.6
 zope.interface==6.0
+
