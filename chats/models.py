@@ -14,8 +14,13 @@ class Room(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.id:
+            super().save(*args, **kwargs)
             self.slug = slugify(str(self.id))
-        super().save(*args, **kwargs)
+            self.save()
+        else:
+            super().save(*args, **kwargs)
+
+
 
     
 class Profile(AbstractUser):
