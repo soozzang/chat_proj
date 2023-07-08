@@ -1,6 +1,5 @@
 Django==4.2.1
-djangorestframework==3.12.4
-drf_yasg==2.2.0
+drf_yasg==1.21.6
 asgiref==3.6.0
 attrs==23.1.0
 auth==0.5.3
