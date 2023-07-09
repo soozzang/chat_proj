@@ -1,6 +1,7 @@
 Django==4.2.1
 drf_yasg==1.21.6
 server_dev==1.1.1
+uwsgi
 asgiref==3.6.0
 attrs==23.1.0
 auth==0.5.3
