@@ -41,14 +41,21 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         db_table = 'user'
 
-    
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
 class Room(models.Model):
     user = models.ManyToManyField(User, related_name="room_users")
     name = models.CharField(max_length=120)
-    image = models.ImageField
+    image = models.ImageField(upload_to='room_images/',null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     user_count = models.PositiveIntegerField(default=0)
     entry_count = models.PositiveIntegerField(default=0)
-
+    password = models.CharField(max_length=100, null=True, blank=True)
+    is_public =  models.BooleanField(default=True)
     def __str__(self):
         return str(self.name)
     

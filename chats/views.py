@@ -90,12 +90,13 @@ class MyInfo(APIView):
 class RoomList(generics.ListCreateAPIView):
     queryset = Room.objects.all().order_by("-id")
     serializer_class = RoomSerializer
-
+    
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
+        room_password = response.data.get('password', None)
         room_id = response.data['id']
         room_name = response.data['name']
-        return Response({"room_id": room_id, "room_name": room_name})
+        return Response({"room_id": room_id, "room_name": room_name,"room_password":room_password})
 
 
 class RoomDetail(generics.RetrieveDestroyAPIView):
