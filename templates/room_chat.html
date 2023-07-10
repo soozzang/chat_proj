@@ -1,0 +1,142 @@
+<!-- {% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-12">
+            <div class="alert alert-info d-flex justify-content-between" role="alert">
+                <h5>ROOM : {{room_name}}</h5>
+                <a href="/accounts/logout/">
+                <button type="button" class="btn btn-light">로그아웃</button>
+                </a>
+            </div>
+            <form>
+                <div class="form-group" id="scrollContainer"  style="max-height:25rem; overflow-y: scroll;">
+                    <div class="jumbotron" id="chatbox" style="padding:2rem 0; margin-bottom: -2rem;">
+                    {% if messages %}
+                    {% for message in messages %}
+                        <b>{{ message.user.username }}</b> : {{ message.content }}<br>
+                        {% endfor %}
+                        <div class="previousChatting" style=" display:flex; justify-content:center;">
+                        <p style="color: red; font-weight: bold; font-family: serif;"> ㅡ Previous Chatting ㅡ</p>
+                        </div>
+                    </div><div id="inner_chatbox"></div>
+                </div>
+                {% else %}
+                <div class="jumbotron" id="chatbox"></div>
+                <b>아직 메세지가 없습니다~</b>
+                    {% endif %}
+
+                </div>
+
+                <br/>
+                <div class="form-group" style="width: 100%;">
+                    <input class="form-control" placeholder="채팅을 입력하세요!" id="my_input" type="text" required></br>
+                </div>
+                <br/>
+                <input class="btn btn-primary btn-lg btn-block" id="submit_button" type="button" value="Send">
+                <input type="text" style="display:none;"/>
+                <!-- 자동submit을 방지하는 display : none input박스 -->
+            </form>
+        </div>
+    </div>
+</div>
+{{id|json_script:"room_id"}}
+<!-- <script> -->
+
+// const chatbox = document.querySelector("#scrollContainer");
+
+// function scrollToBottom() {
+//     chatbox.scrollTop = chatbox.scrollHeight;
+// }
+
+//     scrollToBottom();
+
+//     const roomName= JSON.parse(document.getElementById('room_id').textContent);
+//     const chatSocket = new WebSocket("ws://" + window.location.host + "/ws/"+ roomName +"/");
+
+//     chatSocket.onopen = function (e) {
+//         console.log("The connection was setup successfully !");
+//     };
+//     chatSocket.onclose = function (e) {
+//         console.log("Something unexpected happened !");
+//     };
+
+
+//     document.querySelector("#my_input").focus();
+
+
+//     document.querySelector("#my_input").onkeyup = function (e) {
+
+//     if (e.keyCode == "13") {
+//         e.preventDefault();
+//         {/* document.querySelector("#submit_button").onkeyup() */}
+//         {/* sendChat(); */}
+//         let messageInput = document.querySelector(
+//         "#my_input").value;
+
+//             console.log(messageInput);
+//     if(messageInput.length == 0)
+//         {
+//             {/* alert("채팅을 입력하세요!"); */}
+
+//         }
+//         else
+//         {
+
+//         chatSocket.send(JSON.stringify({ message: messageInput, username : "{{request.user.username}}",room_name:"{{room_name}}"}));
+//         }
+//     }
+//     };
+
+//     function sendChat() {
+    
+//         let messageInput = document.querySelector(
+//         "#my_input").value;
+
+//     if(messageInput.length == 0)
+//         {
+//             alert("채팅을 입력하세요!");
+
+//         }
+//         else
+//         {
+//         chatSocket.send(JSON.stringify({ message: messageInput, username : "{{request.user.username}}",room_name:"{{room_name}}"}));
+//         }
+//     };
+
+//     document.querySelector("#submit_button").onclick = function (e) {
+//         sendChat();
+//     };
+
+//     chatSocket.onmessage = function (e) {
+//     const data = JSON.parse(e.data);
+//     var div = document.createElement("div");
+//     div.innerHTML = "<b>" + data.username + "</b> : " + data.message;
+
+//     document.querySelector("#my_input").value = "";
+//     document.querySelector("#inner_chatbox").appendChild(div);
+//     scrollToBottom();
+//     };
+
+<!-- //     </script> -->
+
+
+
+{% else %}
+<div class="container">
+    <div class="alert alert-info d-flex justify-content-between" role="alert">
+        <h5>로그인 하세요</h5>
+        <a href="/accounts/logout/">
+            <button type="button" class="btn btn-light"><a href="{% url 'login' %}">로그인</a></button>
+        </a>
+    </div>
+</div> 
+{% endif %}
+
+<br/>
+{% endblock %}
