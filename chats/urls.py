@@ -19,6 +19,9 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("",index,name="index"),
+
+    path("room_chat/<int:id>",room_chat,name = "room_chat"),
+
     path("room/<int:pk>/", RoomDetail.as_view(), name="room_detail_destroy"),
     
     path("room_list_create/", RoomList.as_view(), name="room_list_create"),

@@ -45,6 +45,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Room(models.Model):
     user = models.ManyToManyField(User, related_name="room_users")
     name = models.CharField(max_length=120)
+    image = models.ImageField
     user_count = models.PositiveIntegerField(default=0)
     entry_count = models.PositiveIntegerField(default=0)
 
