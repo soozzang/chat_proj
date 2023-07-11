@@ -10,11 +10,6 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
-
-
-
-
-
 def index(request):
     return render(request,'index.html')
 #회원 
@@ -102,18 +97,6 @@ class RoomList(generics.ListCreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response({"error": "로그인 하세요."}, status=status.HTTP_401_UNAUTHORIZED)
-    # def post(self, request, *args, **kwargs):
-    #     if request.user.is_authenticated: 
-    #         response = super().post(request, *args, **kwargs)
-    #         room_password = response.data.get('password', None)
-    #         room_image = response.data.get('image', None)
-    #         room_id = response.data['id']
-    #         room_name = response.data['name']
-    #         category = response.data['category']
-    #         is_public = response.data['is_public']
-    #         return Response({"room_id": room_id,"category":category, "room_name": room_name,"room_password":room_password,"room_image":room_image,"is_public":is_public})
-    #     else:
-    #         return Response({"error": "로그인 하세요."}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class RoomDetail(generics.RetrieveDestroyAPIView):
