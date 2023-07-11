@@ -25,11 +25,13 @@ class UserManger(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     userID = models.CharField(max_length=50, unique = True)
     is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
+    is_staff_user = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
 
-    def is_staff(self):
-        return self.is_admin
     
+    def is_staff(self):
+        return self.is_staff_user
+
     def get_user_rooms(self):
         return Room.objects.filter(user=self)
 
@@ -64,9 +66,8 @@ class Room(models.Model):
 class ChatMessage(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="messages")
-    nick = models.CharField(max_length=15)
     content = models.TextField()
 
     def __str__(self):
-        return f"{self.room.name}-{self.nick}"
+        return f"{self.room.name}-{self.user}"
     

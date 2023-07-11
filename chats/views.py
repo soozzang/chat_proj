@@ -8,6 +8,8 @@ from rest_framework.response import Response
 from .models import Room,ChatMessage,User
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+
 
 
 
@@ -78,7 +80,7 @@ class MyInfo(APIView):
         try:
             user = request.user
         except User.DoesNotExist:
-            return Response({"message": "해당 사용자를 찾을 수 없습니다."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"message": "로그인 해주세요."}, status=status.HTTP_404_NOT_FOUND)
 
         rooms = user.get_user_rooms()
         room_names = [room.name for room in rooms]
@@ -90,13 +92,28 @@ class MyInfo(APIView):
 class RoomList(generics.ListCreateAPIView):
     queryset = Room.objects.all().order_by("-id")
     serializer_class = RoomSerializer
-    
+    permission_classes = [IsAuthenticated]
     def post(self, request, *args, **kwargs):
-        response = super().post(request, *args, **kwargs)
-        room_password = response.data.get('password', None)
-        room_id = response.data['id']
-        room_name = response.data['name']
-        return Response({"room_id": room_id, "room_name": room_name,"room_password":room_password})
+        if request.user.is_authenticated: 
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response({"error": "로그인 하세요."}, status=status.HTTP_401_UNAUTHORIZED)
+    # def post(self, request, *args, **kwargs):
+    #     if request.user.is_authenticated: 
+    #         response = super().post(request, *args, **kwargs)
+    #         room_password = response.data.get('password', None)
+    #         room_image = response.data.get('image', None)
+    #         room_id = response.data['id']
+    #         room_name = response.data['name']
+    #         category = response.data['category']
+    #         is_public = response.data['is_public']
+    #         return Response({"room_id": room_id,"category":category, "room_name": room_name,"room_password":room_password,"room_image":room_image,"is_public":is_public})
+    #     else:
+    #         return Response({"error": "로그인 하세요."}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class RoomDetail(generics.RetrieveDestroyAPIView):
