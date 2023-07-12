@@ -56,7 +56,7 @@ class Logout(APIView):
             auth.logout(request)
             return Response(status=200)
         else:
-            return Response(status=403)
+            return Response({"message":"비로그인 상태입니다."},status=403)
 
 
 class UserInfo(APIView):

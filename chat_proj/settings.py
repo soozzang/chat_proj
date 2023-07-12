@@ -11,6 +11,21 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from corsheaders.defaults import default_headers
+
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',  # React 애플리케이션의 도메인
+]
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',  # React 애플리케이션의 도메인
+]
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'X-CSRFToken',  # CSRF 토큰을 사용하는 경우 허용된 헤더에 추가
+]
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
