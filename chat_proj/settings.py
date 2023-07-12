@@ -15,10 +15,12 @@ from corsheaders.defaults import default_headers
 
 
 CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000'
     'https://soozzang.p-e.kr/'  # React 애플리케이션의 도메인
 ]
 
 CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000'
     'https://soozzang.p-e.kr/',  # React 애플리케이션의 도메인
 ]
 
