@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'chats',
     'rest_framework',
-    'drf_yasg'
+    'drf_yasg',
 ]
 
 CHANNEL_LAYERS = {
