@@ -11,10 +11,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from corsheaders.defaults import default_headers
 
 
 CSRF_TRUSTED_ORIGINS = ['https://breeze.p-e.kr']
+CSRF_COOKIE_NAME = 'X-CSRFToken'
+CSRF_HEADER_NAME = 'csrftoken'
 
 
 
@@ -178,5 +179,7 @@ CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
+
+
 
 LOGIN_REDIRECT_URL = '/admin/'
