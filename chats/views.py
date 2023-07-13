@@ -145,14 +145,13 @@ class ExitRoom(APIView):
 
 
 
-def room_chat(request, id):
-    room_name=Room.objects.get(id=id).name
-    messages=ChatMessage.objects.filter(room=Room.objects.get(id=id))
+def room_chat(request, name):
+    messages=ChatMessage.objects.filter(room=Room.objects.get(name=name))
 
     context = {
-        'room_name' : room_name,
+        'room_name' : name,
         'messages': messages,
-        'id' : id,
+        'room_name' : name,
     }
     return render(request, 'room_chat.html', context)
     

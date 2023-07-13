@@ -38,7 +38,7 @@
         </div>
     </div>
 </div>
-{{id|json_script:"room_id"}}
+{{room_name|json_script:"room_name"}}
 <script>
 
 const chatbox = document.querySelector("#scrollContainer");
@@ -49,8 +49,8 @@ function scrollToBottom() {
 
     scrollToBottom();
 
-    const roomName= JSON.parse(document.getElementById('room_id').textContent);
-    const chatSocket = new WebSocket("wss://" + window.location.host + "/ws/"+ roomName +"/");
+    const roomName= JSON.parse(document.getElementById('room_name').textContent);
+    const chatSocket = new WebSocket("ws://" + window.location.host + "/ws/"+ roomName +"/");
 
     chatSocket.onopen = function (e) {
         console.log("The connection was setup successfully !");

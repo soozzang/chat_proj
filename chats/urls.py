@@ -3,7 +3,7 @@ from .views import *
 from rest_framework import routers
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from chat_proj.consumers import ChatConsumer
+# from chat_proj.consumers import ChatConsumer
 
 router = routers.DefaultRouter()
 
@@ -20,8 +20,8 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("",index,name="index"),
-    
-    path("room_chat/<int:id>",room_chat,name = "room_chat"),
+
+    path("room_chat/<str:name>/",room_chat,name = "room_chat"),
 
     #방
 
