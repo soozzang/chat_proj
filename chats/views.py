@@ -1,4 +1,3 @@
-from django.http import JsonResponse
 from django.shortcuts import render,redirect
 from rest_framework import generics
 from django.contrib import auth
@@ -9,6 +8,7 @@ from .models import Room,ChatMessage,User
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+
 
 def index(request):
     return render(request,'index.html')
@@ -87,12 +87,16 @@ class MyInfo(APIView):
 class RoomList(generics.ListCreateAPIView):
     queryset = Room.objects.all().order_by("-id")
     serializer_class = RoomSerializer
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+    def post(self, request, *args, **kwargs):
+        if request.user.is_authenticated: 
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response({"error": "로그인 하세요."}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class RoomDetail(generics.RetrieveDestroyAPIView):
@@ -152,8 +156,6 @@ def room_chat(request, id):
     }
     return render(request, 'room_chat.html', context)
     
-
-
 
 
 

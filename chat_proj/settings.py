@@ -11,22 +11,24 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from corsheaders.defaults import default_headers
+# from corsheaders.defaults import default_headers
 
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000'
-    'https://soozzang.p-e.kr/'  # React 애플리케이션의 도메인
-]
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:3000',
+#     'http://localhost:8000',
+#     'https://soozzang.p-e.kr/' , # React 애플리케이션의 도메인
+# ]
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000'
-    'https://soozzang.p-e.kr/',  # React 애플리케이션의 도메인
-]
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:8000',
+#     'http://localhost:3000',
+#     'https://soozzang.p-e.kr/',  # React 애플리케이션의 도메인
+# ]
 
-CORS_ALLOW_HEADERS = list(default_headers) + [
-    'X-CSRFToken',  # CSRF 토큰을 사용하는 경우 허용된 헤더에 추가
-]
+# CORS_ALLOW_HEADERS = list(default_headers) + [
+#     'X-CSRFToken',  # CSRF 토큰을 사용하는 경우 허용된 헤더에 추가
+# ]
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -184,10 +186,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
-#set cookie
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SAMESITE = 'None'
-SESSION_COOKIE_SAMESITE = 'None'
+
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SAMESITE = 'None'
+# SESSION_COOKIE_SAMESITE = 'None'
 
 LOGIN_REDIRECT_URL = '/admin/'

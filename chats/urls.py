@@ -1,8 +1,9 @@
-from django.urls import path
+from django.urls import path, re_path
 from .views import *
 from rest_framework import routers
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from chat_proj.consumers import ChatConsumer
 
 router = routers.DefaultRouter()
 
@@ -19,8 +20,10 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("",index,name="index"),
-
+    
     path("room_chat/<int:id>",room_chat,name = "room_chat"),
+
+    #방
 
     path("room/<int:pk>/", RoomDetail.as_view(), name="room_detail_destroy"),
     
@@ -50,4 +53,5 @@ urlpatterns = [
 
     #swagger
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+
 ]
