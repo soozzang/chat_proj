@@ -50,7 +50,7 @@ function scrollToBottom() {
     scrollToBottom();
 
     const roomName= JSON.parse(document.getElementById('room_id').textContent);
-    const chatSocket = new WebSocket("ws://" + window.location.host + "/ws/"+ roomName +"/");
+    const chatSocket = new WebSocket("wss://" + window.location.host + "/ws/"+ roomName +"/");
 
     chatSocket.onopen = function (e) {
         console.log("The connection was setup successfully !");
