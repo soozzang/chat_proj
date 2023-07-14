@@ -1,3 +1,47 @@
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+<script defer>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('e9ea7c55c7f8196ccac6', {
+      cluster: 'ap3'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('{{room_name}}', function(data) {
+    var div = document.createElement("div");
+    div.innerHTML = "<b>" + data.userID + "</b> : " + data.message;
+
+    document.querySelector("#my_input").value = "";
+    document.querySelector("#inner_chatbox").appendChild(div);
+    scrollToBottom();
+    
+    });
+
+    const send_message = (data) => {
+        const options = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+};
+
+fetch('/send_message', options)
+  .then(response => response.json())
+  .then(responseData => {
+    console.log('Response:', responseData);
+    // Process the response data here
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Handle the error
+  });
+
+    }
+  </script>
+
 <div class="container">
     <div class="row d-flex justify-content-center">
         <div class="col-12">
@@ -81,7 +125,7 @@ function scrollToBottom() {
         else
         {
 
-        chatSocket.send(JSON.stringify({ message: messageInput, userID : "{{request.user.userID}}",room_name:"{{room_name}}"}));
+            send_message({ message: messageInput, userID : "{{request.user.userID}}",room_name:"{{room_name}}"});
         }
     }
     };
@@ -104,16 +148,6 @@ function scrollToBottom() {
 
     document.querySelector("#submit_button").onclick = function (e) {
         sendChat();
-    };
-
-    chatSocket.onmessage = function (e) {
-    const data = JSON.parse(e.data);
-    var div = document.createElement("div");
-    div.innerHTML = "<b>" + data.userID + "</b> : " + data.message;
-
-    document.querySelector("#my_input").value = "";
-    document.querySelector("#inner_chatbox").appendChild(div);
-    scrollToBottom();
     };
 
 </script>

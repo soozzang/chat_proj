@@ -9,6 +9,15 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
+import pusher
+
+pusher_client = pusher.Pusher(
+  app_id='1635228',
+  key='e9ea7c55c7f8196ccac6',
+  secret='c50f7c40092babc13237',
+  cluster='ap3',
+  ssl=True
+)
 
 def index(request):
     return render(request,'index.html')
@@ -158,12 +167,12 @@ def room_chat(request, name):
     }
     return render(request, 'room_chat.html', context)
     
-
-
-
-
-
-
-
-
-
+class GetMessage(APIView):
+    def post(self, request, *args, **kwargs):
+        user_id = request.user.userID
+        message = request.data['message']
+        channel = request.data['room_name']
+        room = Room.objects.filter(name=channel).first()
+        ChatMessage.objects.create(user=request.user, room=room, content=message)
+        pusher_client.trigger('my-channel', channel, {'message': message, 'userID': user_id})
+        return Response(status=201)

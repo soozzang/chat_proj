@@ -50,6 +50,7 @@ urlpatterns = [
     path('user_info/<int:id>/', UserInfo.as_view()),
     
     path('my_info/', MyInfo.as_view()),
+    path('send_message', GetMessage.as_view()),
 
     #swagger
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
