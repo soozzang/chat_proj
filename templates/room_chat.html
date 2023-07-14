@@ -83,7 +83,7 @@ fetch('/send_message', options)
     </div>
 </div>
 {{room_name|json_script:"room_name"}}
-<script>
+<script defer>
 
 const chatbox = document.querySelector("#scrollContainer");
 
@@ -142,7 +142,7 @@ function scrollToBottom() {
         }
         else
         {
-        chatSocket.send(JSON.stringify({ message: messageInput, userID : "{{request.user.userID}}",room_name:"{{room_name}}"}));
+            send_message({ message: messageInput, userID : "{{request.user.userID}}",room_name:"{{room_name}}"});
         }
     };
 
