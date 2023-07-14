@@ -121,12 +121,15 @@ class Users_in_room(APIView):
     def post(self, request, room_id):
         user=request.user
         room = Room.objects.get(id=room_id)
+        
         if user not in room.user.all():
             room.user.add(user)
             room.user_count+=1
             room.entry_count+=1
             room.save()
         else:
+            if room.user_count==0:
+                room.user_count+=1
             room.entry_count+=1
             room.save()
         return Response({"message": "방에 입장되었습니다","room_name": room.name,"user_count":room.user_count,"entry_count":room.entry_count})
