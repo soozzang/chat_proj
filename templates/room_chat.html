@@ -1,3 +1,26 @@
+<script>
+var r = Math.floor(Math.random() * 56) + 200;   
+var g = Math.floor(Math.random() * 56) + 200;
+var b = Math.floor(Math.random() * 56) + 200;  
+</script>
+<style>
+.myClass {
+  border: solid 0.1px rgba(255, 255, 255, 0);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  margin-left: 0.6rem;
+  width: fit-content;
+
+  padding: 0.125rem 0.5rem 0.5rem 0.5rem;
+  box-shadow: 0rem 0.25rem 0.35rem 0rem gray;
+  border-radius: 1rem;
+  background-color: gold;
+  background-color: "rgb(" + r + "," + g + "," + b + ")";
+}
+
+</style>
+
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 <script defer>
 
@@ -11,7 +34,8 @@
     var channel = pusher.subscribe('my-channel');
     channel.bind('{{room_name}}', function(data) {
     var div = document.createElement("div");
-    div.innerHTML = "<b>" + data.userID + "</b> : " + data.message;
+    div.className = 'myClass';
+    div.innerHTML = "<b>" + data.userID + "</b> " + data.message;
 
     document.querySelector("#my_input").value = "";
     document.querySelector("#inner_chatbox").appendChild(div);
@@ -43,45 +67,68 @@ fetch('/send_message', options)
   </script>
 
 <div class="container">
-    <div class="row d-flex justify-content-center">
+    <div class="row">
         <div class="col-12">
-            <div class="alert alert-info d-flex justify-content-between" role="alert">
-                <h5>ROOM : {{room_name}}</h5>
+            <br><br>
+            <div class="alert alert-info" id="room_name" role="alert" style="display:flex; justify-content: space-between;
+            align-items: flex-end;">
+                <div style="display:flex;">ROOM : {{room_name}}</div>
                 <a href="/accounts/logout/">
-                <button type="button" class="btn btn-light">로그아웃</button>
+                <button type="button" class="btn">로그아웃</button>
                 </a>
             </div>
             <form>
-                <div class="form-group" id="scrollContainer"  style="max-height:25rem; overflow-y: scroll;">
-                    <div class="jumbotron" id="chatbox" style="padding:2rem 0; margin-bottom: -2rem;">
+                <div class="form-group" id="scrollContainer" style="max-height: 35rem;
+                overflow-y: scroll; border:0.2rem solid rgb(155, 225, 253);">
+                    <div class="jumbotron" id="chatbox"
+                    style="background-color:rgb(220, 251, 251);"
+                    >
                     {% if messages %}
                     {% for message in messages %}
-                        <b>{{ message.user.userID }}</b> : {{ message.content }}<br>
+
+                        <div class="chatting" style="border: solid 0.1px rgba(255, 255, 255, 0);
+                        display:flex; flex-direction: column; 
+                        margin:0rem 1rem 1rem 0.5rem;
+                        width:fit-content;
+                        padding: 0.125rem 0.5rem 0rem 0.5rem;
+                        box-shadow: 0rem 0.3rem 0.5rem 0rem gray;
+                        border-radius: 1rem;
+                        background-color:rgb(255, 255, 255);
+                        "><b >{{ message.user.userID }}</b> {{ message.content }}</div>
                         {% endfor %}
-                        <div class="previousChatting" style=" display:flex; justify-content:center;">
-                        <p style="color: black; font-weight: bold; font-family: serif;"> ㅡ Previous Chatting ㅡ</p>
-                        </div>
-                    </div><div id="inner_chatbox"></div>
+
+                    </div>
+                    <div class="previousChatting" 
+                    style="display: flex; justify-content:center; font-family: Georgia ; font-weight:bold; color: rgb(72, 0, 255);
+                    ">
+                    
+                     ㅡㅡㅡㅡㅡ Previous Chatting ㅡㅡㅡㅡㅡ
+                    </div>    
+                    <div id="inner_chatbox"></div>
                 </div>
                 {% else %}
-                <div class="jumbotron" id="chatbox"></div>
+                <div class="jumbotron" id="chatbox"> ddd</div>
                 <b>아직 메세지가 없습니다~</b>
                     {% endif %}
-
                 </div>
 
                 <br/>
-                <div class="form-group" style="width: 100%;">
-                    <input class="form-control" placeholder="채팅을 입력하세요!" id="my_input" type="text" required></br>
+                <div class="form-group">
+                    <input class="form-control"
+                    style="width: 100%; height:2rem; border:solid 0.1px gray; border-radius:0.5rem;"
+                    placeholder="채팅을 입력하세요!" id="my_input" type="text" required></br>
                 </div>
                 <br/>
+                <input class="btn btn-primary btn-lg btn-block" id="submit_button" type="button" value="Enter"
+                style="display:none;">
+                <input type="text" style="display:none; "/>
                 <input class="btn btn-primary btn-lg btn-block" id="submit_button" type="button" onClick="sendChat()" value="Send">
-                <input type="text" style="display:none;"/>
-                자동submit을 방지하는 display : none input박스
+
+                {% comment %} 자동submit을 방지하는 display : none input박스 {% endcomment %}
             </form>
         </div>
     </div>
-</div>
+
 {{room_name|json_script:"room_name"}}
 <script defer>
 
@@ -146,6 +193,11 @@ function scrollToBottom() {
         }
     };
 
-
+    setTimeout(() => {
+        document.querySelector("#submit_button").onclick = function (e) {
+        sendChat();
+    };
+    }, 500)
+   
 
 </script>
