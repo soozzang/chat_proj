@@ -8,7 +8,7 @@ from .models import Room,ChatMessage,User
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-
+from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
     return render(request,'index.html')
@@ -83,11 +83,11 @@ class MyInfo(APIView):
 
 
 #채팅방 CRUD
-
 class RoomList(generics.ListCreateAPIView):
     queryset = Room.objects.all().order_by("-id")
     serializer_class = RoomSerializer
 
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         if request.user.is_authenticated: 
             serializer = self.get_serializer(data=request.data)
