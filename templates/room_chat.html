@@ -146,8 +146,11 @@ function scrollToBottom() {
         }
     };
 
-    document.querySelector("#submit_button").onclick = function (e) {
+    setTimeout(() => {
+        document.querySelector("#submit_button").onclick = function (e) {
         sendChat();
     };
+    }, 500)
+   
 
 </script>
