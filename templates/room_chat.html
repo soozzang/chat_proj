@@ -75,7 +75,7 @@ fetch('/send_message', options)
                     <input class="form-control" placeholder="채팅을 입력하세요!" id="my_input" type="text" required></br>
                 </div>
                 <br/>
-                <input class="btn btn-primary btn-lg btn-block" id="submit_button" type="button" value="Send">
+                <input class="btn btn-primary btn-lg btn-block" id="submit_button" type="button" onClick="sendChat()" value="Send">
                 <input type="text" style="display:none;"/>
                 자동submit을 방지하는 display : none input박스
             </form>
@@ -146,11 +146,6 @@ function scrollToBottom() {
         }
     };
 
-    setTimeout(() => {
-        document.querySelector("#submit_button").onclick = function (e) {
-        sendChat();
-    };
-    }, 500)
-   
+
 
 </script>
