@@ -89,10 +89,14 @@ class RoomList(generics.ListCreateAPIView):
     serializer_class = RoomSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        if request.user.is_authenticated: 
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response({"error": "로그인 하세요."}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class RoomDetail(generics.RetrieveDestroyAPIView):
