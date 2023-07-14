@@ -14,10 +14,6 @@ from pathlib import Path
 
 
 CSRF_TRUSTED_ORIGINS = ['https://breeze.p-e.kr']
-CSRF_COOKIE_NAME = 'X-CSRFToken'
-CSRF_HEADER_NAME = 'csrftoken'
-
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -175,8 +171,8 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
 
