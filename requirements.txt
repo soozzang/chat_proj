@@ -2,6 +2,7 @@ Django==4.2.1
 drf_yasg==1.21.6
 asgiref==3.6.0
 django-allauth
+pusher==3.3.2
 attrs==23.1.0
 auth==0.5.3
 autobahn==23.6.2
