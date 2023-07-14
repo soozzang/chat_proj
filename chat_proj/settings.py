@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 
 
-CSRF_TRUSTED_ORIGINS = ['https://breeze.p-e.kr']
+CSRF_TRUSTED_ORIGINS = ['https://breeze.p-e.kr', 'https://like-lion-summerthon-team1.pages.dev']
 CSRF_HEADER_NAME = 'HTTP_X_CSRFTOKEN'
 CSRF_COOKIE_NAME = 'csrftoken'
 
